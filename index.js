@@ -11,9 +11,10 @@ import { handleConnection } from './src/controller/WebSocketController.js';
 import rutaMensaje from './src/routes/Route.Mensaje.js';
 import { main } from './src/controller/Cohere.Ia.js';
 import rutaIA from './src/routes/Router.ia.js';
+import { PORT } from './config.js';
 
 const app = express();
-const port = 3000;
+const port = PORT;
 
 app.use(body_parser.json());
 app.use(body_parser.urlencoded({ extend: false }));
