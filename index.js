@@ -9,7 +9,6 @@ import rutaMascotas from './src/routes/Route.Mascotas.js';
 import rutaCategoria from './src/routes/Route.Categoria.js';
 import { handleConnection } from './src/controller/WebSocketController.js';
 import rutaMensaje from './src/routes/Route.Mensaje.js';
-import { main } from './src/controller/Cohere.Ia.js';
 import rutaIA from './src/routes/Router.ia.js';
 import { PORT } from './config.js';
 
