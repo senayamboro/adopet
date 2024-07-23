@@ -8,7 +8,7 @@ export const validacion = async(req,res)=>{
         const [user] = await pool.query(sql)
 
         if (user.length>0) {
-            let token = jwt.sign({user}, process.env.AUT_SECRET,{expiresIn:process.env.AUT_EXPIRE})
+            let token = jwt.sign({user}, 'jasdkladsasdasdasd',{expiresIn:'2h'})
 
             return res.status(200).json({'usuario':user,
                 'token':token
@@ -34,7 +34,7 @@ export const validarToken = async(req,res)=>{
                 mensaje: 'Token es requerido '
             })
         } else {
-            const token = jws.verify(tokenClient, process.env.AUT_SECRET, (error, decoded)=>{
+            const token = jws.verify(tokenClient, 'jasdkladsasdasdasd', (error, decoded)=>{
                 if (error) {
                     return res.status(403).json({
                         mensaje:'El token ya expiro'
