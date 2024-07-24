@@ -143,63 +143,62 @@ export const MisMascotas = async (req, res) => {
 export const actualizarMascotas = async (req, res) => {
     try {
         const { id } = req.params;
-        const { nombre_pet, categoria_id, genero, usuario_id, descripcion, foto, estado } = req.body;
-        
+        const { nombre, categoria, genero, usuario, descripcion, estado } = req.body;
+        let foto = req.file ? req.file.originalname : null;
+
         // Obtener los datos actuales de la mascota
-        const [mascotaAnterior] = await pool.query("SELECT * FROM mascotas WHERE mascota_id=?", [id]);
+        const [mascotaAnterior] = await pool.query("SELECT * FROM mascotas WHERE mascota_id = ?", [id]);
 
         if (!mascotaAnterior.length) {
             return res.status(404).json({
-                message: "No se encontró ninguna mascota con el ID proporcionado",
+                mensaje: "No se encontró ninguna mascota con el ID proporcionado",
             });
         }
 
+        // Obtener la foto actual de la mascota
+        let photo = mascotaAnterior[0].foto;
+        if (foto) {
+            photo = foto;
+        }
+
         // Preparar los datos actualizados, utilizando los valores actuales si no se proporcionan nuevos
-        const updatedNombrePet = nombre_pet || mascotaAnterior[0].nombre_pet;
-        const updatedCategoriaId = categoria_id || mascotaAnterior[0].categoria_id;
+        const updatedNombrePet = nombre || mascotaAnterior[0].nombre_pet;
+        const updatedCategoriaId = categoria || mascotaAnterior[0].categoria_id;
         const updatedGenero = genero || mascotaAnterior[0].genero;
-        const updatedUsuarioId = usuario_id || mascotaAnterior[0].usuario_id;
+        const updatedUsuarioId = usuario || mascotaAnterior[0].usuario_id;
         const updatedDescripcion = descripcion || mascotaAnterior[0].descripcion;
-        const updatedFoto = foto || mascotaAnterior[0].foto;
         const updatedEstado = estado || mascotaAnterior[0].estado;
 
-        // Construir la consulta SQL
-        const query = `
-            UPDATE mascotas 
-            SET 
-                nombre_pet='${updatedNombrePet}', 
-                categoria_id='${updatedCategoriaId}', 
-                genero='${updatedGenero}', 
-                usuario_id='${updatedUsuarioId}', 
-                descripcion='${updatedDescripcion}', 
-                foto='${updatedFoto}', 
-                estado='${updatedEstado}' 
-            WHERE 
-                mascota_id='${id}'
-        `;
-
-        // Imprimir la consulta SQL
-        console.log(query);
-
-        // Ejecutar la consulta
-        const [resultado] = await pool.query(query);
+        // Ejecutar la actualización en la base de datos
+        const [resultado] = await pool.query(
+            `UPDATE mascotas 
+             SET nombre_pet = ?, 
+                 categoria_id = ?, 
+                 genero = ?, 
+                 usuario_id = ?, 
+                 descripcion = ?, 
+                 foto = ?, 
+                 estado = ? 
+             WHERE mascota_id = ?`,
+            [updatedNombrePet, updatedCategoriaId, updatedGenero, updatedUsuarioId, updatedDescripcion, photo, updatedEstado, id]
+        );
 
         if (resultado.affectedRows > 0) {
             res.status(200).json({
-                message: "Se actualizó la mascota correctamente",
+                mensaje: `Se actualizó la mascota correctamente:`,
             });
+            console.log(resultado);
         } else {
             res.status(500).json({
-                message: "No se pudo actualizar la mascota",
+                mensaje: "No se pudo actualizar la mascota",
             });
         }
     } catch (error) {
         console.error("Error al actualizar la mascota: ", error);
         res.status(500).json({
-            message: "Error del servidor",
+            mensaje: "Error del servidor",
             error: error.message
         });
     }
 };
-
 
