@@ -8,7 +8,6 @@ export const handleConnection = (io) => {
     socket.on('chat message', (msg) => {
       console.log('Mensaje recibido: ' + msg);
 
-      // Aquí almacenamos el mensaje en la base de datos
       const { userEnvia_id, userRecibe_id,name_foto,nameUserEnv, message } = msg;
       const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
@@ -38,8 +37,7 @@ export const obtenerMensajes = async (req, res) => {
       SELECT message, nameUserEnv, timestamp 
       FROM chat 
       WHERE 
-        ((userEnvia_id = ? AND userRecibe_id = ? AND name_foto = ?) OR 
-        (userEnvia_id = ? AND userRecibe_id = ? AND name_foto = ?))
+        (userEnvia_id = ? or userRecibe_id = ? AND name_foto = ?)
       ORDER BY timestamp ASC
     `;
 
