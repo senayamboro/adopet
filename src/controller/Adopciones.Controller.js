@@ -71,7 +71,7 @@ export const buscarAdopciones = async (req, res) => {
     m.nombre_pet AS nombre,
     m.foto AS imagen
 FROM adopciones a
-JOIN mascotas m ON a.pet_id = m.mascota_id WHERE fundacion_id = ? or usuario_id=?`;
+JOIN mascotas m ON a.pet_id = m.mascota_id WHERE a.fundacion_id = ? or a.usuario_id=?`;
         const [resultado] = await pool.query(sql, [id,id]);
         
         if (resultado.length > 0) {
