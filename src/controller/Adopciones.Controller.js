@@ -3,7 +3,18 @@ import { pool } from "../db/Conexion.js";
 // listarAdopciones
 export const listarAdopciones = async (req, res) => {
     try {
-        const sql = `SELECT * from adopciones`;
+        const sql = `SELECT 
+    a.adoption_id,
+    a.pet_id,
+    a.usuario_id,
+    a.fundacion_id,
+    a.adopcion_date,
+    a.status,
+    m.nombre_pet AS nombre,
+    m.foto AS imagen
+FROM adopciones a
+JOIN mascotas m ON a.pet_id = m.mascota_id
+`;
         const [resultado] = await pool.query(sql);
         if (resultado.length > 0) {
             res.status(200).json({
