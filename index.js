@@ -11,6 +11,7 @@ import { handleConnection } from './src/controller/WebSocketController.js';
 import rutaMensaje from './src/routes/Route.Mensaje.js';
 import rutaIA from './src/routes/Router.ia.js';
 import { PORT } from './config.js';
+import rutaAdopcion from './src/routes/Route.Adopciones.js';
 
 const app = express();
 const port = PORT;
@@ -29,6 +30,7 @@ handleConnection(io);
 app.use('/usuario', rutauser);
 app.use('/mascotas', rutaMascotas);
 app.use('/categoria', rutaCategoria);
+app.use('/adopciones',rutaAdopcion)
 app.use(rutaMensaje)
 app.use(rutaIA)
 app.use(rutaValidacion);
