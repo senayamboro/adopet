@@ -95,7 +95,7 @@ JOIN mascotas m ON a.pet_id = m.mascota_id WHERE a.fundacion_id = ? or a.usuario
 export const cambiarAAprovado = async (req, res) => {
     try {
         const { id } = req.params;
-        const sql = `UPDATE adopciones SET status = 2 WHERE id = ? AND status = 1`;
+        const sql = `UPDATE adopciones SET status = 2 WHERE adoption_id = ? AND status = 1`;
         const [resultado] = await pool.query(sql, [id]);
 
         if (resultado.affectedRows > 0) {
@@ -119,7 +119,7 @@ export const cambiarAAprovado = async (req, res) => {
 export const cambiarARechazado = async (req, res) => {
     try {
         const { id } = req.params;
-        const sql = `UPDATE adopciones SET status = 3 WHERE id = ? AND status = 1`;
+        const sql = `UPDATE adopciones SET status = 3 WHERE adoption_id = ? AND status = 1`;
         const [resultado] = await pool.query(sql, [id]);
 
         if (resultado.affectedRows > 0) {
