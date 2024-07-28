@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 export const pool = createPool({
     host: 'be5wr48gwgcnsfm4k7ii-mysql.services.clever-cloud.com',
     user: 'urjwbpqd5bwrzc2q',
-    password: 'urjwbpqd5bwrzc2q',
+    password: 't1Ax12V9Y8rsWXb7I7ut',
     database: 'be5wr48gwgcnsfm4k7ii',
     port: 3306
 });
