@@ -4,10 +4,10 @@ import dotenv from 'dotenv';
 // dotenv.config({ path: './src/env/.env' });
 
 export const pool = createPool({
-    host: 'localhost',
-    user: 'cesar',
-    password: 'cesar',
-    database: 'adopet',
+    host: 'be5wr48gwgcnsfm4k7ii-mysql.services.clever-cloud.com',
+    user: 'urjwbpqd5bwrzc2q',
+    password: 'urjwbpqd5bwrzc2q',
+    database: 'be5wr48gwgcnsfm4k7ii',
     port: 3306
 });
 
