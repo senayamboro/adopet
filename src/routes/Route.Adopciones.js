@@ -6,7 +6,7 @@ const rutaAdopcion = Router()
 rutaAdopcion.get("/listar",listarAdopciones)
 rutaAdopcion.post("/registrar",registrarAdopciones)
 rutaAdopcion.get('/buscar/:id',buscarAdopciones)
-rutaAdopcion.put('/actualizarAprovado/:id',cambiarAAprovado)
+rutaAdopcion.put('/actualizarAprobado/:id',cambiarAAprovado)
 rutaAdopcion.put('/actualizar/:id',cambiarARechazado)
 
 
