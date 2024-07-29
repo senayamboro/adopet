@@ -222,6 +222,24 @@ export const actualizarAEnEspera = async (req, res) => {
     }
   };
 
+  export const actualizarAEnAdopcion = async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      const sql = `UPDATE mascotas SET estado = 1 WHERE mascota_id = ?`;
+      const [resultado] = await pool.query(sql, [id]);
+  
+      if (resultado.affectedRows > 0) {
+        res.status(200).json({ mensaje: "Se actualizó el estado de la mascota correctamente" });
+      } else {
+        res.status(404).json({ mensaje: "No se encontró ninguna mascota con el ID proporcionado" });
+      }
+    } catch (error) {
+      console.error("Error al actualizar el estado de la mascota: ", error);
+      res.status(500).json({ mensaje: "Error del servidor", error: error.message });
+    }
+  };
+
   // actualizar el estado de la mascota a adoptado
 export const actualizarAAdoptado = async (req, res) => {
     try {

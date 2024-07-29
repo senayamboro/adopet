@@ -7,7 +7,7 @@ rutaAdopcion.get("/listar",listarAdopciones)
 rutaAdopcion.post("/registrar",registrarAdopciones)
 rutaAdopcion.get('/buscar/:id',buscarAdopciones)
 rutaAdopcion.put('/actualizarAprobado/:id',cambiarAAprovado)
-rutaAdopcion.put('/actualizar/:id',cambiarARechazado)
+rutaAdopcion.put('/actualizarARechazado/:id',cambiarARechazado)
 
 
 export default rutaAdopcion;
