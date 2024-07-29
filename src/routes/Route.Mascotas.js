@@ -10,7 +10,7 @@ rutaMascotas.get("/mias/:id",MisMascotas)
 rutaMascotas.put("/actualizar/:id",cargarFoto,actualizarMascotas)
 rutaMascotas.put('/estadoEspera/:id', actualizarAEnEspera)
 rutaMascotas.put('/estadoAdoptado/:id', actualizarAAdoptado)
-rutaMascotas.put('/estadoAdoptado/:id', actualizarAEnAdopcion)
+rutaMascotas.put('/estadoEnAdopcion/:id', actualizarAEnAdopcion)
 
 
 export default rutaMascotas
