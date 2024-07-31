@@ -258,3 +258,56 @@ export const actualizarAAdoptado = async (req, res) => {
       res.status(500).json({ mensaje: "Error del servidor", error: error.message });
     }
   };
+
+  //Historial de la mascota 
+
+  export const HistorialMascota = async (req, res) => {
+    try {
+      const { id } = req.params;
+      const sql = `
+        SELECT 
+          a.adoption_id,
+          DATE_FORMAT(a.adopcion_date, '%Y-%m-%d') AS adoption_date,
+          a.status,
+          m.mascota_id,
+          m.nombre_pet,
+          m.categoria_id,
+          m.genero,
+          m.descripcion,
+          m.foto,
+          m.estado,
+          DATE_FORMAT(m.creado, '%Y-%m-%d') AS creado,
+          u.id AS usuario_id,
+          u.nombre AS usuario_nombre,
+          u.cedula AS usuario_cedula,
+          u.correo AS usuario_correo,
+          u.telefono AS usuario_telefono,
+          u.rol AS usuario_rol
+        FROM 
+          adopciones a
+        JOIN 
+          mascotas m ON a.pet_id = m.mascota_id
+        JOIN 
+          usuarios u ON a.usuario_id = u.id
+        WHERE 
+          a.adoption_id = ?;
+      `;
+  
+      const [resultado] = await pool.query(sql, [id]);
+  
+      if (resultado.length > 0) {
+        res.status(200).json({
+          resultado
+        });
+      } else {
+        res.status(404).json({
+          mensaje: 'No se encontraron mascotas con adopciones'
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        mensaje: 'Error del servidor',
+        error: error.message
+      });
+    }
+  };
