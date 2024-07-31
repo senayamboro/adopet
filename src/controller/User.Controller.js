@@ -5,26 +5,32 @@ import { pool } from "../db/Conexion.js";
 export const registrarUsuario = async(req,res)=>{
     try {
         const {cedula,nombre, telefono, correo, rol,password} =req.body
-        const sql = 'INSERT INTO usuarios (nombre, cedula, correo, telefono, rol,password) VALUES (?, ?, ?, ?, ?,?)';
-        const [resultado] = await pool.query(sql, [nombre, cedula, correo, telefono,rol, password]);
+        const sql = 'INSERT INTO usuarios (nombre, cedula, correo, telefono, rol, password) VALUES (?, ?, ?, ?, ?, ?)';
+    const [resultado] = await pool.query(sql, [nombre, cedula, correo, telefono, rol, password]);
 
-        if (resultado.affectedRows > 0) {
-            res.status(200).json(
-                {
-                    mensaje: "usuario registrado con exito !!!"
-                }
-            )
-        }else{
-            res.status(404).json({
-                mensaje: "No  se pudo registrar el usuario"
-            })
-        }
-    } catch (error) {
-        res.status(500).json({
-            mensaje: "Error del servidor: "+error
-        })
+    if (resultado.affectedRows > 0) {
+      res.status(200).json({
+        mensaje: "Usuario registrado con éxito"
+      });
+    } else {
+      res.status(404).json({
+        mensaje: "No se pudo registrar el usuario"
+      });
     }
-}
+  } catch (error) {
+    // Manejo de errores de claves únicas
+    if (error.code === 'ER_DUP_ENTRY') {
+      return res.status(409).json({
+        mensaje: "Ya existe un usuario con esa cédula, correo o teléfono"
+      });
+    }
+
+    // Otros errores del servidor
+    res.status(500).json({
+      mensaje: "Error del servidor: " + error.message
+    });
+  }
+};
 // Listar
 
 export const listarUsuarios =async(req,res)=>{
