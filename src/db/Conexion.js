@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 // dotenv.config({ path: './src/env/.env' });
 
 export const pool = createPool({
-    host: 'local',
+    host: 'localhost',
     user: 'root',
     password: '',
     database: 'IA',
